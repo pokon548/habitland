@@ -1,13 +1,12 @@
-import { useState } from 'react'
 import { TabSelector } from './components/TabSelector'
 import { ViewType, useViewStore } from './data/store/viewStore'
 
 import './styles/react-tabs.css'
-import { Minus, Square, X } from '@phosphor-icons/react'
+import { Cards, Minus, Square, X } from '@phosphor-icons/react'
 
 function App(): JSX.Element {
   const tabs = useViewStore((state) => state.viewInstances)
-  const [isMaximized, setIsMaximized] = useState(false)
+  const isMaximized = useViewStore((state) => state.isMaximized)
   const [activeViewIndex, setActiveViewIndex] = useViewStore((state) => [
     state.currentViewIndex,
     state.setCurrentViewIndex
@@ -76,16 +75,19 @@ function App(): JSX.Element {
                 window.electron.ipcRenderer.send('minimize')
               }}
             >
-              <Minus className="w-4 h-4 mx-2 text-gray-400" />
+              <Minus className="w-4 h-4 mx-2 text-gray-500" />
             </button>
             <button
               onClick={(e): void => {
                 e.preventDefault()
-                setIsMaximized(!isMaximized)
                 window.electron.ipcRenderer.send('maximize')
               }}
             >
-              <Square className="w-4 h-4 mx-1 ml-1 text-gray-400" />
+              {isMaximized ? (
+                <Cards className="w-4 h-4 mx-1 ml-1 text-gray-500" />
+              ) : (
+                <Square className="w-4 h-4 mx-1 ml-1 text-gray-500" />
+              )}
             </button>
             <button
               onClick={(e): void => {
@@ -93,7 +95,7 @@ function App(): JSX.Element {
                 window.electron.ipcRenderer.send('close')
               }}
             >
-              <X className="w-4 h-4 mx-2 text-gray-400" />
+              <X className="w-4 h-4 mx-2 text-gray-500" />
             </button>
           </div>
         </div>

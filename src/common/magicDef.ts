@@ -1,5 +1,13 @@
 export enum ChannelType {
-  PlaceHolder = 'Just placeholder'
+  PlaceHolder = 'Just placeholder',
+  Window = 'Receive window status from node process'
+}
+
+export class WindowMessage {
+  maximized: boolean
+  constructor(maximized: boolean) {
+    this.maximized = maximized
+  }
 }
 
 export class NormalUrlMessage {

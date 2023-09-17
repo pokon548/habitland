@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { ChannelType, WindowMessage } from '../common/magicDef'
 
 function createWindow(): void {
   // Create the browser window.
@@ -22,6 +23,22 @@ function createWindow(): void {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
+  })
+
+  mainWindow.on('enter-full-screen', () => {
+    mainWindow.webContents.send(ChannelType.Window, new WindowMessage(mainWindow.isFullScreen()))
+  })
+
+  mainWindow.on('leave-full-screen', () => {
+    mainWindow.webContents.send(ChannelType.Window, new WindowMessage(mainWindow.isFullScreen()))
+  })
+
+  mainWindow.on('maximize', () => {
+    mainWindow.webContents.send(ChannelType.Window, new WindowMessage(mainWindow.isMaximized()))
+  })
+
+  mainWindow.on('unmaximize', () => {
+    mainWindow.webContents.send(ChannelType.Window, new WindowMessage(mainWindow.isMaximized()))
   })
 
   app.on('web-contents-created', (_createEvent, contents) => {

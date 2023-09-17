@@ -13,7 +13,7 @@ export function Tab({ title, type }: Props): JSX.Element {
     <div className="flex place-items-center select-none">
       <House weight="duotone" className="dark:text-white text-gray-500" />
 
-      <div className="pl-2 truncate dark:text-white">{title}</div>
+      <div className="pl-2 truncate dark:text-white text-gray-700">{title}</div>
     </div>
   )
 }
