@@ -19,7 +19,7 @@ export const TabSelector = ({
     <div onClick={onClick} role="tab" aria-selected={isActive ? 'true' : 'false'}>
       <div
         className={`flex h-10 tab-outer-style px-3.5 py-1.5 ${
-          isActive ? 'bg-zinc-100 dark:bg-zinc-700 rounded-t' : ''
+          isActive ? 'bg-zinc-100 dark:bg-zinc-700 rounded-t-lg' : ''
         }`}
       >
         <Tab title={children.title} type={children.type} />
