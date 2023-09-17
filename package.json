@@ -23,8 +23,10 @@
   "dependencies": {
     "@electron-toolkit/preload": "^2.0.0",
     "@electron-toolkit/utils": "^2.0.1",
+    "@phosphor-icons/react": "^2.0.10",
     "electron-updater": "^6.1.4",
     "license-compatibility-checker": "^0.3.5",
+    "uuid": "^9.0.1",
     "zustand": "^4.4.1"
   },
   "devDependencies": {

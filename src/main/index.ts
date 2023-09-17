@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -6,19 +6,28 @@ import icon from '../../resources/icon.png?asset'
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 1280,
+    height: 800,
     show: false,
+    frame: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
+      sandbox: false, // FIXME: Not secure, try to write better logic to handle ipc event (node <---> renderer)
+      webviewTag: true
     }
   })
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
+  })
+
+  app.on('web-contents-created', (_createEvent, contents) => {
+    contents.setWindowOpenHandler(({ url }) => {
+      console.log(url)
+      return { action: 'deny' }
+    })
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -33,6 +42,22 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+  ipcMain.on('minimize', () => {
+    mainWindow.minimize()
+  })
+
+  ipcMain.on('maximize', () => {
+    if (mainWindow.isMaximized()) {
+      mainWindow.restore()
+    } else {
+      mainWindow.maximize()
+    }
+  })
+
+  ipcMain.on('close', () => {
+    mainWindow.close()
+  })
 }
 
 // This method will be called when Electron has finished
