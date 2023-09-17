@@ -9,9 +9,10 @@ function createWindow(): void {
   const mainWindow = new BrowserWindow({
     width: 1280,
     height: 800,
+    frame: false,
     show: false,
     transparent: true,
-    frame: false,
+    hasShadow: true,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {

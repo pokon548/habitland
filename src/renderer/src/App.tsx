@@ -26,8 +26,8 @@ function App(): JSX.Element {
           <ul
             className={
               isMaximized
-                ? 'tab-switcher scroll-smooth flex h-10 grow items-center bg-zinc-300 dark:bg-zinc-800 overflow-x-hidden overflow-y-hidden'
-                : 'tab-switcher scroll-smooth flex h-10 grow items-center bg-zinc-300 dark:bg-zinc-800 overflow-x-hidden overflow-y-hidden rounded-tl-lg'
+                ? 'tab-switcher scroll-smooth flex h-10 grow items-center bg-zinc-200 dark:bg-zinc-800 overflow-x-hidden overflow-y-hidden'
+                : 'tab-switcher scroll-smooth flex h-10 grow items-center bg-zinc-200 dark:bg-zinc-800 overflow-x-hidden overflow-y-hidden rounded-tl-lg'
             }
             onWheel={(event): void => {
               const target = event.currentTarget as HTMLUListElement
@@ -59,14 +59,14 @@ function App(): JSX.Element {
                 {tab}
               </TabSelector>
             ))}
-            <div className="titlebar flex h-full w-full growth bg-zinc-300 dark:bg-zinc-800"></div>
+            <div className="titlebar flex h-full w-full growth bg-zinc-200 dark:bg-zinc-800"></div>
           </ul>
 
           <div
             className={
               isMaximized
-                ? 'bg-zinc-300 dark:bg-zinc-800 flex content-center'
-                : 'bg-zinc-300 dark:bg-zinc-800 flex content-center rounded-tr-lg'
+                ? 'bg-zinc-200 dark:bg-zinc-800 flex content-center'
+                : 'bg-zinc-200 dark:bg-zinc-800 flex content-center rounded-tr-lg'
             }
           >
             <button
@@ -75,7 +75,9 @@ function App(): JSX.Element {
                 window.electron.ipcRenderer.send('minimize')
               }}
             >
-              <Minus className="w-4 h-4 mx-2 text-gray-500" />
+              <div className="rounded-full py-2 ml-1 hover:bg-gray-300">
+                <Minus className="w-4 h-4 mx-2 text-gray-600" />
+              </div>
             </button>
             <button
               onClick={(e): void => {
@@ -83,11 +85,13 @@ function App(): JSX.Element {
                 window.electron.ipcRenderer.send('maximize')
               }}
             >
-              {isMaximized ? (
-                <Cards className="w-4 h-4 mx-1 ml-1 text-gray-500" />
-              ) : (
-                <Square className="w-4 h-4 mx-1 ml-1 text-gray-500" />
-              )}
+              <div className="rounded-full py-2  px-1 hover:bg-gray-300">
+                {isMaximized ? (
+                  <Cards className="w-4 h-4 mx-1 ml-1 text-gray-600" />
+                ) : (
+                  <Square className="w-4 h-4 mx-1 ml-1 text-gray-600" />
+                )}
+              </div>
             </button>
             <button
               onClick={(e): void => {
@@ -95,7 +99,9 @@ function App(): JSX.Element {
                 window.electron.ipcRenderer.send('close')
               }}
             >
-              <X className="w-4 h-4 mx-2 text-gray-500" />
+              <div className="rounded-full py-2 mr-1 hover:bg-gray-300">
+                <X className="w-4 h-4 mx-2 text-gray-600" />
+              </div>
             </button>
           </div>
         </div>
