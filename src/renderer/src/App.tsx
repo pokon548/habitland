@@ -1,3 +1,4 @@
+import { HomeView } from './components/HomeView'
 import { TabSelector } from './components/TabSelector'
 import { ViewType, useViewStore } from './data/store/viewStore'
 
@@ -75,7 +76,7 @@ function App(): JSX.Element {
                 window.electron.ipcRenderer.send('minimize')
               }}
             >
-              <div className="rounded-full py-2 ml-1 hover:bg-gray-300">
+              <div className="rounded-full py-2 transition-all ml-1 hover:bg-gray-300">
                 <Minus className="w-4 h-4 mx-2 text-gray-600" />
               </div>
             </button>
@@ -85,7 +86,7 @@ function App(): JSX.Element {
                 window.electron.ipcRenderer.send('maximize')
               }}
             >
-              <div className="rounded-full py-2  px-1 hover:bg-gray-300">
+              <div className="rounded-full py-2 transition-all px-1 hover:bg-gray-300">
                 {isMaximized ? (
                   <Cards className="w-4 h-4 mx-1 ml-1 text-gray-600" />
                 ) : (
@@ -99,7 +100,7 @@ function App(): JSX.Element {
                 window.electron.ipcRenderer.send('close')
               }}
             >
-              <div className="rounded-full py-2 mr-1 hover:bg-gray-300">
+              <div className="rounded-full py-2 transition-all mr-1 hover:bg-gray-300">
                 <X className="w-4 h-4 mx-2 text-gray-600" />
               </div>
             </button>
@@ -118,7 +119,7 @@ function App(): JSX.Element {
               className={tabs.indexOf(tab) === activeViewIndex ? 'w-full h-full' : 'hidden'}
               key={tab.uuid}
             >
-              {tab.type}
+              {tab.type === ViewType.Home ? <HomeView /> : 'what'}
             </div>
           ))}
         </div>
